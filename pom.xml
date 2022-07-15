@@ -7,7 +7,32 @@
     <groupId>org.example</groupId>
     <artifactId>cdp_project</artifactId>
     <packaging>pom</packaging>
+    <name>Maven Project</name>
+    <description>Maven project with a working, deployable site.</description>
     <version>1.0-SNAPSHOT</version>
+
+    <distributionManagement>
+        <site>
+            <id>site-server</id>
+            <name>Test Project Site</name>
+            <url>file:///tmp/maven-project-site</url>
+        </site>
+    </distributionManagement>
+
+
+    <build>
+    <plugins>
+    <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+            <source>1.6</source>
+            <target>1.6</target>
+        </configuration>
+    </plugin>
+
+
+    </plugins>
+    </build>
 
     <properties>
         <project.build.sourceEncoding>utf-8</project.build.sourceEncoding>
