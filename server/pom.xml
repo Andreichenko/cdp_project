@@ -10,6 +10,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>server</artifactId>
+    <packaging>jar</packaging>
+    <name>Server</name>
+    <description>App</description>
+
+    <build>
+        <finalName>${project.artifactId}</finalName>
+    </build>
 
     <properties>
         <maven.compiler.source>13</maven.compiler.source>
