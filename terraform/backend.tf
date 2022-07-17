@@ -7,7 +7,7 @@ terraform {
     region            = "us-east-1"
     profile           = "default"
     key               = "terraform-state-file/statefile.tfstate"
-    bucket            = "terraform-state-bucket-frei-0002"
+    bucket            = "terraform-state-bucket-frei-0003"
   }
 }
 
