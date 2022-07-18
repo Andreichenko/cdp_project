@@ -16,7 +16,7 @@ resource "aws_security_group" "jenkins-sg" {
     from_port              = 8080
     protocol               = "tcp"
     to_port                = 8080
-
+    cidr_blocks            = [var.external_ip]
   }
 
   egress {
