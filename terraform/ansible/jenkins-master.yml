@@ -72,7 +72,7 @@
         recurse: yes
         owner: jenkins
 
-    - name: 'Start Jenkins'
+    - name: 'Start Jenkins ...'
       service:
         name: jenkins
         state: started
