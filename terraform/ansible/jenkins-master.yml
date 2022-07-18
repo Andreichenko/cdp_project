@@ -66,6 +66,7 @@
         state: started
         enabled: yes
 
+#if we're going to launch master and worker
 #    - name: 'Wait until Jenkins is up'
 #      shell: result_first=1; while [[ $result_first != 0 ]]; do if [[ `grep 'Jenkins is fully up and running' /var/log/jenkins/jenkins.log` ]];then result_first=0;else sleep 4;fi;done
 #      register: result
