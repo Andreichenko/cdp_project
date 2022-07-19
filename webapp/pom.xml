@@ -30,7 +30,7 @@
                 <configuration>
                     <webResources>
                         <resource>
-                            <directory>WEB-INF</directory>
+                            <directory>web</directory>
                         </resource>
                     </webResources>
                 </configuration>
