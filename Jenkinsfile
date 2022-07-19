@@ -19,7 +19,7 @@ timestamps {
             '''
         }
          stage('Maven build'){
-               sh 'mvn -f webapp/pom.xml -B -DskipTests clean package'
+               sh 'mvn --version'
                sh 'find $PWD -mindepth 1 -maxdepth 1 -exec du -hs {} + 2>/dev/null | sort -hr | head -20 '
            }
 
