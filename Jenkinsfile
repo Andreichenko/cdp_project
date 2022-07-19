@@ -19,6 +19,8 @@ timestamps {
             '''
         }
          stage('Maven build'){
+               echo "PATH = ${M2_HOME}/bin:${PATH}"
+               echo "M2_HOME = /opt/maven/apache-maven-3.8.6/"
                sh 'mvn --version'
                sh 'find $PWD -mindepth 1 -maxdepth 1 -exec du -hs {} + 2>/dev/null | sort -hr | head -20 '
            }
