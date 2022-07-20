@@ -40,10 +40,10 @@ resource "aws_security_group" "tomcat-sg" {
     cidr_blocks            = [var.external_ip]
   }
   ingress {
-    description            = "Allow anyone on port 8081"
-    from_port              = 8081
+    description            = "Allow anyone on port 8080 for tomcat service"
+    from_port              = 8080
     protocol               = "tcp"
-    to_port                = 8081
+    to_port                = 8080
     cidr_blocks            = [var.external_ip]
   }
 
