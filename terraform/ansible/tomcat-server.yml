@@ -36,10 +36,10 @@
 
     - name: 'download & unarchive tomcat10'
       unarchive:
-        src: https://dlcdn.apache.org/tomcat/tomcat-10/v10.0.22/bin/apache-tomcat-10.0.22.tar.gz
+        src: https://mirrors.estointernet.in/apache/tomcat/tomcat-10/v10.0.4/bin/apache-tomcat-10.0.4.tar.gz
         dest: /opt/tomcat10
         remote_src: yes
-        extra_opts: '[--strip-components=1]'
+        extra_opts: [--strip-components=1]
 
     - name: 'Change ownership of tomcat directory'
       file:
