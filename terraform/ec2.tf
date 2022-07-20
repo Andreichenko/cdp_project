@@ -5,7 +5,7 @@ data "aws_ssm_parameter" "linuxAMI-us-east-1" {
 
 data "aws_ssm_parameter" "Ubuntu-us-east-1"{
   provider = aws.region-common
-  name = "ubuntu/images/hvm-ssd/ubuntu-bionic-18.04-amd64-server-20220610"
+  name = "/aws/service/ubuntu/images/hvm-ssd/ubuntu-bionic-18.04-amd64-server-20220610"
 }
 
 #create key-pair for logging into EC2 in us-east-1
