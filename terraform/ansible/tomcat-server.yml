@@ -30,7 +30,7 @@
         path: /opt/tomcat10
         owner: tomcat
         group: tomcat
-        mode: '755'
+        mode: 0755
         recurse: yes
 
     - name: 'download & unarchive tomcat10'
@@ -59,4 +59,5 @@
       systemd:
         name: tomcat
         state: started
+        enabled: yes
         daemon_reload: true
