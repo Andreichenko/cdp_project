@@ -56,7 +56,7 @@ resource "aws_instance" "tomcat-server-node" {
   instance_type                 = var.instance_type
   key_name                      = aws_key_pair.common-key.key_name
   associate_public_ip_address   = true
-  vpc_security_group_ids        = [aws_security_group.jenkins-sg.id]
+  vpc_security_group_ids        = [aws_security_group.tomcat-sg.id]
   subnet_id                     = aws_subnet.common_subnet_primary.id
 
   tags = {
