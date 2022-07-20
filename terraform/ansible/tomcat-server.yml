@@ -27,7 +27,7 @@
 
     - name: 'Create a Tomcat Directory'
       file:
-        path: /opt/tomcat10
+        path: /opt/tomcat
         owner: tomcat
         group: tomcat
         mode: 0755
@@ -36,13 +36,13 @@
     - name: 'download & unarchive tomcat10'
       unarchive:
         src: https://mirrors.estointernet.in/apache/tomcat/tomcat-10/v10.0.20/bin/apache-tomcat-10.0.20.tar.gz
-        dest: /opt/tomcat10
+        dest: /opt/tomcat
         remote_src: yes
         extra_opts: [--strip-components=1]
 
     - name: 'Change ownership of tomcat directory'
       file:
-        path: /opt/tomcat10
+        path: /opt/tomcat
         owner: tomcat
         group: tomcat
         mode: "u+rwx,g+rx,o=rx"
