@@ -29,7 +29,7 @@ resource "aws_security_group" "jenkins-sg" {
 
 resource "aws_security_group" "tomcat-sg" {
   provider                 = aws.region-common
-  name                     = "jenkins-sg"
+  name                     = "tomcat-sg"
   description              = "Allow tcp/8081 tcp/22"
   vpc_id                   = aws_vpc.vpc_common.id
   ingress {
