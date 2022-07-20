@@ -3,9 +3,20 @@ data "aws_ssm_parameter" "linuxAMI-us-east-1" {
   name                         = "/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2"
 }
 
-data "aws_ssm_parameter" "Ubuntu-us-east-1"{
+data "aws_ami" "Ubuntu-us-east-1"{
+  most_recent = true
   provider = aws.region-common
-  name = "099720109477/ubuntu/images/hvm-ssd/ubuntu-bionic-18.04-amd64-server-20220610"
+  filter {
+    name = "name"
+    values = [
+      "ubuntu/images/hvm-ssd/ubuntu-bionic-18.04-amd64-server-20220610"]
+  }
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+  owners = ["099720109477"]
+
 }
 
 #create key-pair for logging into EC2 in us-east-1
@@ -41,7 +52,7 @@ EOF
 #create and bootstrap ec2 in us-east-1 tomcat
 resource "aws_instance" "tomcat-server-node" {
   provider                      = aws.region-common
-  ami                           = data.aws_ssm_parameter.Ubuntu-us-east-1.value
+  ami                           = data.aws_ami.Ubuntu-us-east-1.id
   instance_type                 = var.instance_type
   key_name                      = aws_key_pair.common-key.key_name
   associate_public_ip_address   = true
