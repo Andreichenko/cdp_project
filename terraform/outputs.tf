@@ -14,3 +14,7 @@ output "jenkins-master-node-public-ip" {
   value = aws_instance.jenkins-master-node.public_ip
 }
 
+output "tomcat-server-node-public-ip" {
+  value = aws_instance.tomcat-server-node.public_ip
+}
+
