@@ -9,7 +9,7 @@
 
     - name: 'Update the System Packages'
       apt:
-        upgrade: 'yes'
+        upgrade: yes
         update_cache: yes
 
     - name: Create a Tomcat User
