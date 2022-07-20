@@ -25,7 +25,6 @@
         name: default-jdk
         state: present
 
-
     - name: 'Create a Tomcat Directory'
       file:
         path: /opt/tomcat10
