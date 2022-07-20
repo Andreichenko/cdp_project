@@ -26,3 +26,31 @@ resource "aws_security_group" "jenkins-sg" {
     cidr_blocks            = ["0.0.0.0/0"]
   }
 }
+
+resource "aws_security_group" "tomcat-sg" {
+  provider                 = aws.region-common
+  name                     = "tomcat-sg"
+  description              = "Allow tcp/8081 tcp/22"
+  vpc_id                   = aws_vpc.vpc_common.id
+  ingress {
+    description            = "Allow 22 from our public IP"
+    from_port              = 22
+    protocol               = "tcp"
+    to_port                = 22
+    cidr_blocks            = [var.external_ip]
+  }
+  ingress {
+    description            = "Allow anyone on port 8080 for tomcat service"
+    from_port              = 8080
+    protocol               = "tcp"
+    to_port                = 8080
+    cidr_blocks            = [var.external_ip]
+  }
+
+  egress {
+    from_port              = 0
+    protocol               = "-1"
+    to_port                = 0
+    cidr_blocks            = ["0.0.0.0/0"]
+  }
+}
