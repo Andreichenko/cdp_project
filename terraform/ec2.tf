@@ -39,7 +39,7 @@ EOF
 }
 
 #create and bootstrap ec2 in us-east-1 tomcat
-resource "aws_instance" "jenkins-master-node" {
+resource "aws_instance" "tomcat-server-node" {
   provider                      = aws.region-common
   ami                           = data.aws_ssm_parameter.Ubuntu-us-east-1.value
   instance_type                 = var.instance_type
@@ -51,12 +51,13 @@ resource "aws_instance" "jenkins-master-node" {
   tags = {
     Name                        = "tomcat_server"
   }
+
+  provisioner "local-exec" {
+    command                    = <<EOF
+aws --profile ${var.profile} ec2 wait instance-status-ok --region ${var.region-common} --instance-ids ${self.id}
+ansible-playbook ansible/tomcat-server.yml -i ansible/inventory/aws_ec2.yml --extra-vars 'hosts=tag_Name_${self.tags.Name}'
+EOF
+  }
 }
 
-provisioner "local-exec" {
-  command                    = <<EOF
-aws --profile ${var.profile} ec2 wait instance-status-ok --region ${var.region-common} --instance-ids ${self.id}
-ansible-playbook ansible/jenkins-master.yml -i ansible/inventory/aws_ec2.yml --extra-vars 'hosts=tag_Name_${self.tags.Name}'
-EOF
-}
-}
+
