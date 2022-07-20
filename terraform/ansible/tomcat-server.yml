@@ -51,7 +51,7 @@
 
     - name: 'Copy Tomcat service from local to remote'
       copy:
-        src: /etc/tomcat.service
+        src: files/tomcat.service
         dest: /etc/systemd/system/
         mode: 0755
 
