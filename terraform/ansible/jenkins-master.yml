@@ -93,3 +93,4 @@
 #      shell: result_first=1; while [[ $result_first != 0 ]]; do if [[ `grep 'Jenkins is fully up and running' /var/log/jenkins/jenkins.log` ]];then result_first=0;else sleep 4;fi;done
 #      register: result
 #      until: result.rc == 0
+# jenkins worker is required
