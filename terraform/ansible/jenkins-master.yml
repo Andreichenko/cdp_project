@@ -67,14 +67,11 @@
         enabled: yes
 
     - name: 'Download Apache Maven'
-      get_url:
-        url: 'https://dlcdn.apache.org/maven/maven-3/3.8.6/binaries/apache-maven-3.8.6-bin.tar.gz'
-        dest: '/tmp/apache-maven-3.8.6-bin.tar.gz'
-
-    - name: 'Untar Maven'
-      shell:
-        chdir: /tmp
-        creates: /opt/apache-maven-3.8.6 tar -zxf apache-maven-3.8.6-bin.tar.gz -C /opt
+      unarchive:
+        src: 'https://dlcdn.apache.org/maven/maven-3/3.8.6/binaries/apache-maven-3.8.6-bin.tar.gz'
+        dest: /opt/apache-maven
+        remote_src: yes
+        extra_opts: [--strip-components=1]
 
     - name: 'Set MAVEN_HOME'
       lineinfile:
