@@ -66,9 +66,9 @@
         state: started
         enabled: yes
 
-    - name: 'Create a Tomcat Directory'
+    - name: 'Create a Maven Directory'
       file:
-        path: /opt/maven
+        path: /opt/apache-maven
         owner: jenkins
         group: jenkins
         mode: 0755
