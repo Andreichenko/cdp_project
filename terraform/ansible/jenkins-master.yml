@@ -89,8 +89,8 @@
         mode: 0744
         line: '{{ item }}'
       with_items:
-        - 'export M2_HOME=/opt/apache-maven-3.8.6'
-        - 'export MAVEN_HOME=/opt/apache-maven-3.8.6'
+        - 'export M2_HOME=/opt/apache-maven'
+        - 'export MAVEN_HOME=/opt/apache-maven'
         - 'export PATH=${M2_HOME}/bin:${PATH}'
 
 #if we're going to launch master and worker
