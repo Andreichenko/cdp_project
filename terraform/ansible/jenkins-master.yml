@@ -66,6 +66,14 @@
         state: started
         enabled: yes
 
+    - name: 'Create a Tomcat Directory'
+      file:
+        path: /opt/maven
+        owner: jenkins
+        group: jenkins
+        mode: 0755
+        recurse: yes
+
     - name: 'Download Apache Maven'
       unarchive:
         src: 'https://dlcdn.apache.org/maven/maven-3/3.8.6/binaries/apache-maven-3.8.6-bin.tar.gz'
