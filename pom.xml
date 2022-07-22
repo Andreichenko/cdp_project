@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.example</groupId>
+    <groupId>org.example.cdp_project</groupId>
     <artifactId>cdp_project</artifactId>
     <packaging>pom</packaging>
     <name>Maven Project</name>
@@ -18,9 +18,9 @@
 
     <distributionManagement>
         <site>
-            <id>site-server</id>
+            <id>site_server</id>
             <name>Test Project Site</name>
-            <url>file:///tmp/maven-project-site</url>
+            <url>file:///tmp/cdp_project_site</url>
         </site>
     </distributionManagement>
 
