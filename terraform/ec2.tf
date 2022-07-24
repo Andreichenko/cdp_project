@@ -86,6 +86,12 @@ resource "aws_instance" "docker-server-node" {
   tags = {
     Name = "docker_server"
   }
+  provisioner "local-exec" {
+    command                    = <<EOF
+aws --profile ${var.profile} ec2 wait instance-status-ok --region ${var.region-common} --instance-ids ${self.id}
+ansible-playbook ansible/docker-server.yml -i ansible/inventory/aws_ec2.yml --extra-vars 'hosts=tag_Name_${self.tags.Name}'
+EOF
+  }
 }
 
 
