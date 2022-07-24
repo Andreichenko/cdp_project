@@ -1,0 +1,49 @@
+---
+
+- hosts: "{{ hosts }}"
+  become: yes
+  remote_user: ec2-user
+  become_user: root
+
+  tasks:
+
+    - name: Install required packages
+      yum:
+        name: "{{ item }}"
+        state: latest
+      with_items:
+        - yum-utils
+        - device-mapper-persistent-data
+        - lvm2
+
+    - name: Add Docker repo
+      get_url:
+        url: "{{ docker_repo }}"
+        dest: /etc/yum.repos.d/docker-ce.repo
+      vars:
+        docker_repo: "https://download.docker.com/linux/centos/docker-ce.repo"
+
+    - name: Enable Docker Edge & Test repo
+      ini_file:
+        dest: /etc/yum.repos.d/docker-ce.repo
+        section: "{{ item }}"
+        option: enabled
+        value: '0'
+      with_items: ['docker-ce-test', 'docker-ce-edge']
+
+    - name: Install Docker
+      package:
+        name: docker-ce
+        state: latest
+
+    - name: Start Docker service
+      service:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Add user vagrant to docker group
+      user:
+        name: ubuntu
+        groups: docker
+        append: yes
