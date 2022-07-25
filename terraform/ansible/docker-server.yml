@@ -2,7 +2,7 @@
 
 - hosts: "{{ hosts }}"
   become: yes
-  remote_user: ec2-user
+  remote_user: ubuntu
   become_user: root
 
   tasks:
