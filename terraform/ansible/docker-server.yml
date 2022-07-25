@@ -7,143 +7,42 @@
 
   tasks:
 
-    - name: Install required packages
+    - name: Update all packages
       yum:
-        name: "{{ item }}"
+        name: '*'
         state: latest
-      with_items:
-        - yum-utils
-        - device-mapper-persistent-data
-        - lvm2
+        update_only: yes
 
-    - name: Ensure old versions of Docker are not installed.
-      package:
-        name:
-          - docker
-          - docker-common
-          - docker-engine
-        state: absent
-
-    - name: Add Docker GPG key.
-      rpm_key:
-        key: "{{ docker_yum_gpg_key }}"
-        state: present
+    - name: Ensure a list of yum packages are installed
+      yum:
+        name: "{{ packages }}"
+        state: latest
+        update_cache: yes
       vars:
-        docker_repo_url: https://download.docker.com/linux
-        docker_yum_gpg_key: "{{ docker_repo_url }}/centos/gpg"
+        packages:
+          - python-pip
+          - yum-utils
+          - device-mapper-persistent-data
+          - lvm2
+          - amazon-linux-extras
 
-    - name: Add Docker repository.
-      get_url:
-        url: "{{ docker_yum_repo_url }}"
-        dest: '/etc/yum.repos.d/docker-{{ docker_edition }}.repo'
-        owner: root
-        group: root
-        mode: 0644
-      vars:
-        docker_edition: 'ce'
-        docker_repo_url: https://download.docker.com/linux
-        docker_yum_repo_url: "{{ docker_repo_url }}/{{ (ansible_distribution == 'Fedora') | ternary('fedora','centos') }}/docker-{{ docker_edition }}.repo"
+    - name: Add extras repository
+      shell: yum-config-manager --enable extras
 
-    - name: Configure Docker Nightly repo.
-      ini_file:
-        dest: '/etc/yum.repos.d/docker-{{ docker_edition }}.repo'
-        section: 'docker-{{ docker_edition }}-nightly'
-        option: enabled
-        value: '{{ docker_yum_repo_enable_nightly }}'
-        mode: 0644
-        no_extra_spaces: true
-      vars:
-        docker_edition: 'ce'
-        docker_yum_repo_enable_nightly: '0'
+    - name: Install docker-ce (centos) via amazon-linux-extras packages
+      shell: "amazon-linux-extras install docker=18.06.1 -y"
 
-    - name: Configure Docker Test repo.
-      ini_file:
-        dest: '/etc/yum.repos.d/docker-{{ docker_edition }}.repo'
-        section: 'docker-{{ docker_edition }}-test'
-        option: enabled
-        value: '{{ docker_yum_repo_enable_test }}'
-        mode: 0644
-        no_extra_spaces: true
-      vars:
-        docker_edition: 'ce'
-        docker_yum_repo_enable_test: '0'
-
-    - name: Configure containerd on RHEL 8.
-      block:
-        - name: Ensure container-selinux is installed.
-          package:
-            name: container-selinux
-            state: present
-
-        - name: Ensure containerd.io is installed.
-          package:
-            name: containerd.io
-            state: present
-      when: ansible_distribution_major_version | int == 8
-
-    - name: Install Docker.
-      package:
-        name: "{{ docker_package }}"
-        state: "{{ docker_package_state }}"
-      notify: restart docker
-      ignore_errors: "{{ ansible_check_mode }}"
-      when: "ansible_version.full is version_compare('2.12', '<') or ansible_os_family not in ['RedHat', 'Debian']"
-      vars:
-        docker_package_state: present
-        docker_package: "docker-{{ docker_edition }}"
-
-    - name: Ensure /etc/docker/ directory exists.
-      file:
-        path: /etc/docker
-        state: directory
-        mode: 0755
-
-
-    - name: Configure Docker daemon options.
-      copy:
-        content: "{{ docker_daemon_options | to_nice_json }}"
-        dest: /etc/docker/daemon.json
-        mode: 0644
-      when: docker_daemon_options.keys() | length > 0
-      notify: restart docker
-      vars:
-        docker_daemon_options: {}
-
-    - name: Ensure Docker is started and enabled at boot.
-      service:
-        name: docker
-        state: "{{ docker_service_state }}"
-        enabled: "{{ docker_service_enabled }}"
-      vars:
-        docker_service_state: started
-        docker_service_enabled: true
-
-
-#    - name: Add Docker repo
-#      get_url:
-#        url: "{{ docker_repo }}"
-#        dest: /etc/yum.repos.d/docker-ce.repo
-#      vars:
-#        docker_repo: "https://download.docker.com/linux/centos/docker-ce.repo"
-
-#    - name: Enable Docker Edge & Test repo
-#      ini_file:
-#        dest: /etc/yum.repos.d/docker-ce.repo
-#        section: "{{ item }}"
-#        option: enabled
-#        value: '0'
-#      with_items: ['docker-ce-test', 'docker-ce-edge']
-
-
-
-    - name: Start Docker service
+    - name: Enable Docker CE service at startup
       service:
         name: docker
         state: started
         enabled: yes
 
-    - name: Add user ec2-user to docker group
-      user:
-        name: ec2-user
-        groups: docker
-        append: yes
+    - name: Ensure Python pip packages are installed
+      pip:
+        name: "{{ packages }}"
+      vars:
+        packages:
+          - boto
+          - boto3
+          - docker-compose
