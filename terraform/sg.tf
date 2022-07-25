@@ -57,7 +57,7 @@ resource "aws_security_group" "tomcat-sg" {
 
 resource "aws_security_group" "docker-sg" {
   provider                 = aws.region-common
-  name                     = "tomcat-sg"
+  name                     = "docker-sg"
   description              = "Allow tcp/8080 tcp/22"
   vpc_id                   = aws_vpc.vpc_common.id
   ingress {
@@ -68,7 +68,7 @@ resource "aws_security_group" "docker-sg" {
     cidr_blocks            = [var.external_ip]
   }
   ingress {
-    description            = "Allow anyone on port 8081->8080/tcp"
+    description            = "Allow anyone on port 8081-8080/tcp"
     from_port              = 8080
     protocol               = "tcp"
     to_port                = 8080
