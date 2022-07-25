@@ -75,7 +75,7 @@ EOF
 #create and bootstrap ec2 in us-east-1 tomcat
 resource "aws_instance" "docker-server-node" {
   provider        = aws.region-common
-  ami             = data.aws_ami.Ubuntu-us-east-1.id
+  ami             = data.aws_ssm_parameter.linuxAMI-us-east-1.value
   instance_type   = var.instance_type
   key_name        = aws_key_pair.common-key.key_name
   associate_public_ip_address = true
