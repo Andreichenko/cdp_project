@@ -28,6 +28,8 @@
       rpm_key:
         key: "{{ docker_yum_gpg_key }}"
         state: present
+      vars:
+        docker_yum_gpg_key: "{{ docker_repo_url }}/centos/gpg"
 
     - name: Add Docker repository.
       get_url:
@@ -38,7 +40,8 @@
         mode: 0644
       vars:
         docker_edition: 'ce'
-        docker_yum_repo_url: 'https://download.docker.com/linux/centos/docker-ce.repo'
+        docker_repo_url: https://download.docker.com/linux
+        docker_yum_repo_url: "{{ docker_repo_url }}/{{ (ansible_distribution == 'Fedora') | ternary('fedora','centos') }}/docker-{{ docker_edition }}.repo"
 
     - name: Configure Docker Nightly repo.
       ini_file:
@@ -50,6 +53,7 @@
         no_extra_spaces: true
       vars:
         docker_edition: 'ce'
+        docker_yum_repo_enable_nightly: '0'
 
     - name: Configure Docker Test repo.
       ini_file:
@@ -61,6 +65,7 @@
         no_extra_spaces: true
       vars:
         docker_edition: 'ce'
+        docker_yum_repo_enable_test: '0'
 
     - name: Configure containerd on RHEL 8.
       block:
