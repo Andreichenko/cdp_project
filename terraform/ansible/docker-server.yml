@@ -97,7 +97,7 @@
         path: /etc/docker
         state: directory
         mode: 0755
-      when: docker_daemon_options.keys() | length > 0
+
 
     - name: Configure Docker daemon options.
       copy:
