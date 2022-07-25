@@ -72,3 +72,26 @@ EOF
 }
 
 
+#create and bootstrap ec2 in us-east-1 tomcat
+resource "aws_instance" "docker-server-node" {
+  provider        = aws.region-common
+  ami             = data.aws_ssm_parameter.linuxAMI-us-east-1.value
+  instance_type   = var.instance_type
+  key_name        = aws_key_pair.common-key.key_name
+  associate_public_ip_address = true
+  vpc_security_group_ids = [
+    aws_security_group.docker-sg.id]
+  subnet_id = aws_subnet.common_subnet_primary.id
+
+  tags = {
+    Name = "docker_server"
+  }
+  provisioner "local-exec" {
+    command                    = <<EOF
+aws --profile ${var.profile} ec2 wait instance-status-ok --region ${var.region-common} --instance-ids ${self.id}
+ansible-playbook ansible/docker-server.yml -i ansible/inventory/aws_ec2.yml --extra-vars 'hosts=tag_Name_${self.tags.Name}'
+EOF
+  }
+}
+
+
