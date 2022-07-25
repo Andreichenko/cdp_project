@@ -18,3 +18,7 @@ output "tomcat-server-node-public-ip" {
   value = aws_instance.tomcat-server-node.public_ip
 }
 
+output "docker-server-node-public-ip" {
+  value = aws_instance.docker-server-node.public_ip
+}
+
