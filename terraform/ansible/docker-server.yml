@@ -81,6 +81,44 @@
             state: present
       when: ansible_distribution_major_version | int == 8
 
+    - name: Install Docker.
+      package:
+        name: "{{ docker_package }}"
+        state: "{{ docker_package_state }}"
+      notify: restart docker
+      ignore_errors: "{{ ansible_check_mode }}"
+      when: "ansible_version.full is version_compare('2.12', '<') or ansible_os_family not in ['RedHat', 'Debian']"
+      vars:
+        docker_package_state: present
+        docker_package: "docker-{{ docker_edition }}"
+
+    - name: Ensure /etc/docker/ directory exists.
+      file:
+        path: /etc/docker
+        state: directory
+        mode: 0755
+      when: docker_daemon_options.keys() | length > 0
+
+    - name: Configure Docker daemon options.
+      copy:
+        content: "{{ docker_daemon_options | to_nice_json }}"
+        dest: /etc/docker/daemon.json
+        mode: 0644
+      when: docker_daemon_options.keys() | length > 0
+      notify: restart docker
+      vars:
+        docker_daemon_options: {}
+
+    - name: Ensure Docker is started and enabled at boot.
+      service:
+        name: docker
+        state: "{{ docker_service_state }}"
+        enabled: "{{ docker_service_enabled }}"
+      vars:
+        docker_service_state: started
+        docker_service_enabled: true
+
+
 #    - name: Add Docker repo
 #      get_url:
 #        url: "{{ docker_repo }}"
@@ -96,10 +134,7 @@
 #        value: '0'
 #      with_items: ['docker-ce-test', 'docker-ce-edge']
 
-    - name: Install Docker
-      yum:
-        name: docker-ce
-        state: latest
+
 
     - name: Start Docker service
       service:
