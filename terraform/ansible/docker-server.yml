@@ -96,10 +96,10 @@
 #        value: '0'
 #      with_items: ['docker-ce-test', 'docker-ce-edge']
 
-#    - name: Install Docker
-#      yum:
-#        name: docker-ce
-#        state: latest
+    - name: Install Docker
+      yum:
+        name: docker-ce
+        state: latest
 
     - name: Start Docker service
       service:
