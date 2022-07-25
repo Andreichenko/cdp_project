@@ -44,6 +44,6 @@
 
     - name: Add user vagrant to docker group
       user:
-        name: ubuntu
+        name: ec2-user
         groups: docker
         append: yes
