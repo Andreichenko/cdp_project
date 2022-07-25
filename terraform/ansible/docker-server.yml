@@ -29,6 +29,7 @@
         key: "{{ docker_yum_gpg_key }}"
         state: present
       vars:
+        docker_repo_url: https://download.docker.com/linux
         docker_yum_gpg_key: "{{ docker_repo_url }}/centos/gpg"
 
     - name: Add Docker repository.
