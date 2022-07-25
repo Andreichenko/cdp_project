@@ -30,7 +30,7 @@
       shell: yum-config-manager --enable extras
 
     - name: Install docker-ce (centos) via amazon-linux-extras packages
-      shell: "amazon-linux-extras install docker=20.10 -y"
+      shell: "amazon-linux-extras install docker=stable -y"
 
     - name: Enable Docker CE service at startup
       service:
