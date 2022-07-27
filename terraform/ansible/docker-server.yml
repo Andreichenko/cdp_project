@@ -52,3 +52,10 @@
         name: ec2-user
         groups: docker
         append: yes
+
+    - name: Add user jenkins to docker group
+      user:
+        name: dockeradmin
+        groups: docker
+        password: dockeradmin
+        append: yes
