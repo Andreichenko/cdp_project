@@ -73,4 +73,3 @@
 
     - name: 'create link files for tomcat shutdown.sh'
       shell: 'ln -s /opt/tomcat/bin/shutdown.sh /usr/local/bin/tomcatdown'
-
