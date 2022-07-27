@@ -61,3 +61,16 @@
         state: started
         enabled: yes
         daemon_reload: true
+
+    - name: 'Permisions for startup'
+      shell: 'chmod +x /opt/tomcat/bin/startup.sh'
+
+    - name: 'Permisions for shutdown'
+      shell: 'chmod +x /opt/tomcat/bin/shutdown.sh'
+
+    - name: 'create link files for tomcat startup.sh'
+      shell: 'ln -s /opt/tomcat/bin/startup.sh /usr/local/bin/tomcatup'
+
+    - name: 'create link files for tomcat shutdown.sh'
+      shell: 'ln -s /opt/tomcat/bin/shutdown.sh /usr/local/bin/tomcatdown'
+
