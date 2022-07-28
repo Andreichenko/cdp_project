@@ -62,3 +62,17 @@
         password: dockeradmin
         append: yes
 
+    - name: Add user ansadmin to docker and root groups
+      user:
+        name: ansadmin
+        groups:
+          - docker
+          - sudo
+        state: present
+        shell: /bin/bash
+        system: no
+        create_home: yes
+        home: /home/ansadmin
+
+
+
