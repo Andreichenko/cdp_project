@@ -25,6 +25,8 @@
           - device-mapper-persistent-data
           - lvm2
           - amazon-linux-extras
+          - git
+          - ansible
 
     - name: Add extras repository
       shell: yum-config-manager --enable extras
@@ -59,3 +61,4 @@
         groups: docker
         password: dockeradmin
         append: yes
+
