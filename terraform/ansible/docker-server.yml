@@ -25,14 +25,18 @@
           - device-mapper-persistent-data
           - lvm2
           - amazon-linux-extras
-          - git
-          - ansible2
 
     - name: Add extras repository
       shell: yum-config-manager --enable extras
 
     - name: Install docker-ce (centos) via amazon-linux-extras packages
       shell: "amazon-linux-extras install docker=stable -y"
+
+    - name: Add ansible repository
+      shell: "amazon-linux-extras enable ansible2"
+
+    - name: Install Ansible
+      shell: "yum install -y ansible"
 
     - name: Enable Docker CE service at startup
       service:
