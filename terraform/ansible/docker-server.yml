@@ -70,14 +70,8 @@
       user:
         name: ansadmin
         password: ansadmin
-        groups:
-          - docker
-          - root
-        state: present
-        shell: /bin/bash
-        system: no
-        create_home: yes
-        home: /home/ansadmin
+        groups: docker
+        append: yes
 
     - name: Gathering user home directory location
       local_action: shell echo $HOME
@@ -86,12 +80,12 @@
 
     - name: Copy keys added to authorized_keys
       authorized_key:
-        user=root
+        user=ec2-user
         key="{{ lookup('file', 'authorized_keys') }}"
 
     - name: "Copy id_rsa.pub if found locally"
       authorized_key:
-        user=root
+        user=ec2-user
         key={{ lookup('file', '{{ userhome.stdout }}/.ssh/id_rsa.pub') }}
         manage_dir=yes
       ignore_errors: true
