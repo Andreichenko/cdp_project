@@ -36,7 +36,7 @@
       shell: "amazon-linux-extras enable ansible2"
 
     - name: Install Ansible
-      shell: "yum install -y ansible"
+      shell: "yum install -y ansible git"
 
     - name: Enable Docker CE service at startup
       service:
