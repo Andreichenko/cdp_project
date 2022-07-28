@@ -32,6 +32,12 @@
     - name: Install docker-ce (centos) via amazon-linux-extras packages
       shell: "amazon-linux-extras install docker=stable -y"
 
+    - name: Add ansible repository
+      shell: "amazon-linux-extras enable ansible2"
+
+    - name: Install Ansible
+      shell: "yum install -y ansible git"
+
     - name: Enable Docker CE service at startup
       service:
         name: docker
@@ -59,3 +65,27 @@
         groups: docker
         password: dockeradmin
         append: yes
+
+    - name: Add user ansadmin to docker and root groups
+      user:
+        name: ansadmin
+        password: ansadmin
+        groups: docker
+        append: yes
+
+    - name: Gathering user home directory location
+      local_action: shell echo $HOME
+      register: userhome
+      ignore_errors: true
+
+    - name: Copy keys added to authorized_keys
+      authorized_key:
+        user=ec2-user
+        key="{{ lookup('file', 'authorized_keys') }}"
+
+    - name: "Copy id_rsa.pub if found locally"
+      authorized_key:
+        user=ec2-user
+        key={{ lookup('file', '{{ userhome.stdout }}/.ssh/id_rsa.pub') }}
+        manage_dir=yes
+      ignore_errors: true
