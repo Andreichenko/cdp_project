@@ -85,7 +85,6 @@
         user=root
         key="{{ lookup('file', 'authorized_keys') }}"
 
-    # copy local user's key
     - name: Copy id_rsa.pub if found locally
       authorized_key:
         user=root
