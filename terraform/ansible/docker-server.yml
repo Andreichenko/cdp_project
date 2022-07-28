@@ -72,7 +72,7 @@
         password: ansadmin
         groups:
           - docker
-          - sudo
+          - root
         state: present
         shell: /bin/bash
         system: no
