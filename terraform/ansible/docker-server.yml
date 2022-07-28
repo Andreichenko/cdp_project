@@ -65,6 +65,7 @@
     - name: Add user ansadmin to docker and root groups
       user:
         name: ansadmin
+        password: ansadmin
         groups:
           - docker
           - sudo
