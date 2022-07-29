@@ -23,18 +23,7 @@ output "docker-server-node-public-ip" {
 }
 
 output "cluster_id" {
-  description = "The name/id of the EKS cluster. Will block on cluster creation until the cluster is really ready"
-  value       = try(aws_eks_cluster.this[0].id, "")
-}
-
-output "cluster_endpoint" {
-  description = "Endpoint for your Kubernetes API server"
-  value       = try(aws_eks_cluster.this[0].endpoint, "")
-}
-
-output "cluster_arn" {
-  description = "The Amazon Resource Name (ARN) of the cluster"
-  value       = try(aws_eks_cluster.this[0].arn, "")
+  value = module.eks.aws_eks_cluster.id
 }
 
 
