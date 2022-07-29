@@ -31,11 +31,6 @@ output "cluster_endpoint" {
   value       = module.eks.cluster_endpoint
 }
 
-output "cluster_status" {
-  description = "Status of the EKS cluster. One of `CREATING`, `ACTIVE`, `DELETING`, `FAILED`"
-  value       = module.eks.cluster_status
-}
-
 output "cluster_arn" {
   description = "The Amazon Resource Name (ARN) of the cluster"
   value       = module.eks.cluster_arn
