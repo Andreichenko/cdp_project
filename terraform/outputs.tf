@@ -23,7 +23,7 @@ output "docker-server-node-public-ip" {
 }
 
 output "cluster_id" {
-  value = module.eks.aws_eks_cluster.id
+  value = module.eks.cluster_id
 }
 
 
