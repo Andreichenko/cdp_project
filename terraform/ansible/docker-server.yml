@@ -83,7 +83,7 @@
         user=ec2-user
         key="{{ lookup('file', 'authorized_keys') }}"
 
-    - name: "Copy id_rsa.pub if found locally"
+    - name: Copy key if found locally
       authorized_key:
         user=ec2-user
         key={{ lookup('file', '{{ userhome.stdout }}/.ssh/id_rsa.pub') }}

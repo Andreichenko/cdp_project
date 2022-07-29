@@ -22,3 +22,18 @@ output "docker-server-node-public-ip" {
   value = aws_instance.docker-server-node.public_ip
 }
 
+output "cluster_id" {
+  value = module.eks.cluster_id
+}
+
+output "cluster_endpoint" {
+  description = "Endpoint for your Kubernetes API server"
+  value       = module.eks.cluster_endpoint
+}
+
+output "cluster_arn" {
+  description = "The Amazon Resource Name (ARN) of the cluster"
+  value       = module.eks.cluster_arn
+}
+
+
