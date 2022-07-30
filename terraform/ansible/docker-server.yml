@@ -122,3 +122,29 @@
         aws_secret_key: "<aws-secret-key>"
         aws_region: us-east-1
         aws_format: json
+
+    - name: Download kubectl binary
+      get_url:
+        url: "https://storage.googleapis.com/kubernetes-release/release/v{{ kubectl_version }}/bin/{{ kubectl_os }}/{{ kubectl_arch }}/kubectl"
+        dest: "{{ kubectl_tmp_directory }}"
+      tags:
+        - kubectl
+      vars:
+        kubectl_tmp_directory: "{{ lookup('env', 'TMPDIR') | default('/tmp',true) }}"
+
+    - name: Copy kubectl binary to destination directory
+      copy:
+        src: "{{ kubectl_tmp_directory }}/{{ item }}"
+        dest: "{{ kubectl_bin_directory }}/{{ item }}"
+        mode: "{{ kubectl_binary_mode }}"
+        owner: "{{ kubectl_owner }}"
+        group: "{{ kubectl_group }}"
+        remote_src: true
+      with_items:
+        - kubectl
+      vars:
+        kubectl_tmp_directory: "{{ lookup('env', 'TMPDIR') | default('/tmp',true) }}"
+        kubectl_bin_directory: "/usr/local/bin"
+        kubectl_binary_mode: "0755"
+        kubectl_owner: "root"
+        kubectl_group: "root"
