@@ -120,5 +120,5 @@
         aws_profile: default
         aws_access_key: "<aws-accesss-key>"
         aws_secret_key: "<aws-secret-key>"
-        aws_region: eu-west-1
-        aws_format: table
+        aws_region: us-east-1
+        aws_format: json
