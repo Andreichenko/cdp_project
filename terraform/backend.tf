@@ -12,3 +12,4 @@ terraform {
 }
 
 #aws s3api create-bucket --bucket terraform-state-bucket-frei-0008
+#aws eks --region us-east-1 update-kubeconfig --name my-eks-cluster
