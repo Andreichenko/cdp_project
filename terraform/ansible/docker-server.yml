@@ -107,7 +107,6 @@
 
     - name: Configure AWS.
       shell: aws configure set {{ item.key }} {{ item.value }} --profile {{ aws_profile }}
-      no_log: True
       with_dict:
         aws_access_key_id: "{{ aws_access_key }}"
         aws_secret_access_key: "{{ aws_secret_key }}"
