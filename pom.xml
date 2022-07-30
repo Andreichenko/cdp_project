@@ -208,7 +208,6 @@
             <version>1.8.5</version>
             <scope>test</scope>
         </dependency>
-
       </dependencies>
     </dependencyManagement>
 </project>
