@@ -75,7 +75,7 @@
 
     - name: Gathering user home directory location
       local_action: shell echo $HOME
-      register: userhome
+      register: ec2-user
       ignore_errors: true
 
     - name: Copy keys added to authorized_keys
