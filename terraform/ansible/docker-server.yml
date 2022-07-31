@@ -114,6 +114,8 @@
       vars:
         kubectl_tmp_directory: "{{ lookup('env', 'TMPDIR') | default('/tmp',true) }}"
         kubectl_version: "1.23.2"
+        kubectl_os: "linux"
+        kubectl_arch: "amd64"
 
     - name: Copy kubectl binary to destination directory
       copy:
