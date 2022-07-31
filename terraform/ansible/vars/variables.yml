@@ -25,20 +25,3 @@ $ANSIBLE_VAULT;1.1;AES256
 32626336376233623636363836383338306632626365346538633061363364353963623434333263
 39653432353734373266373730346665383162343964386334393463323763333536343635313335
 6339666163613666363231333535343333393435356533353332
-#---
-#
-#aws_system_user: root
-#aws_profile: default
-#aws_access_key: "AKIA43NT7SJWXN4JIWVF"
-#aws_secret_key: "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"
-#aws_region: us-east-1
-#aws_format: json
-#
-#kubectl_tmp_directory: "{{ lookup('env', 'TMPDIR') | default('/tmp',true) }}"
-#kubectl_version: "1.23.2"
-#kubectl_os: "linux"
-#kubectl_arch: "amd64"
-#kubectl_bin_directory: "/usr/local/bin"
-#kubectl_binary_mode: "0755"
-#kubectl_owner: "root"
-#kubectl_group: "root"
