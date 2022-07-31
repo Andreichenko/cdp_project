@@ -73,6 +73,8 @@
         groups: docker
         append: yes
 
+
+
     - name: Download the awscli bundle.
       get_url: url=https://s3.amazonaws.com/aws-cli/awscli-bundle.zip dest=/tmp/awscli-bundle.zip
       register: aws_cli_download_bundle
