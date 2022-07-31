@@ -73,20 +73,6 @@
         groups: docker
         append: yes
 
-    - name: Gathering user home directory location
-      local_action: shell echo $HOME
-      ignore_errors: true
-
-    - name: Copy keys added to authorized_keys
-      authorized_key:
-        key="{{ lookup('file', 'authorized_keys') }}"
-
-    - name: Copy key if found locally
-      authorized_key:
-        key={{ lookup('file', '{{ userhome.stdout }}/.ssh/id_rsa.pub') }}
-        manage_dir=yes
-      ignore_errors: true
-
     - name: Download the awscli bundle.
       get_url: url=https://s3.amazonaws.com/aws-cli/awscli-bundle.zip dest=/tmp/awscli-bundle.zip
       register: aws_cli_download_bundle
