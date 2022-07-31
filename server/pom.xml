@@ -21,7 +21,6 @@
     </build>
 
     <dependencies>
-
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit-dep</artifactId>
@@ -45,6 +44,5 @@
             <artifactId>hamcrest-library</artifactId>
             <scope>test</scope>
         </dependency>
-
     </dependencies>
 </project>

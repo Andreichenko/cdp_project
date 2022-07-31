@@ -7,8 +7,9 @@ terraform {
     region            = "us-east-1"
     profile           = "default"
     key               = "terraform-state-file/statefile.tfstate"
-    bucket            = "terraform-state-bucket-frei-0003"
+    bucket            = "terraform-state-bucket-frei-0005"
   }
 }
 
 #aws s3api create-bucket --bucket terraform-state-bucket-frei-0008
+#aws eks --region us-east-1 update-kubeconfig --name my-eks-cluster

@@ -4,6 +4,8 @@
   become: yes
   remote_user: ec2-user
   become_user: root
+  vars_files:
+    - vars/variables.yml
 
   tasks:
 
@@ -73,19 +75,50 @@
         groups: docker
         append: yes
 
-    - name: Gathering user home directory location
-      local_action: shell echo $HOME
-      register: userhome
-      ignore_errors: true
 
-    - name: Copy keys added to authorized_keys
-      authorized_key:
-        user=ec2-user
-        key="{{ lookup('file', 'authorized_keys') }}"
 
-    - name: Copy key if found locally
-      authorized_key:
-        user=ec2-user
-        key={{ lookup('file', '{{ userhome.stdout }}/.ssh/id_rsa.pub') }}
-        manage_dir=yes
-      ignore_errors: true
+    - name: Download the awscli bundle.
+      get_url: url=https://s3.amazonaws.com/aws-cli/awscli-bundle.zip dest=/tmp/awscli-bundle.zip
+      register: aws_cli_download_bundle
+
+    - name: Unarchive the installer.
+      unarchive: src=/tmp/awscli-bundle.zip dest=/tmp copy=no creates=/tmp/awscli-bundle
+      when: aws_cli_download_bundle.changed
+      register: aws_cli_unarchive_installer
+
+    - name: Install awscli package.
+      shell: python /tmp/awscli-bundle/install -i /usr/local/aws -b /usr/bin/aws
+      args:
+        creates: /usr/bin/aws
+      when: aws_cli_unarchive_installer.changed
+
+    - name: Configure AWS.
+      shell: aws configure set {{ item.key }} {{ item.value }} --profile {{ aws_profile }}
+      with_dict:
+        aws_access_key_id: "{{ aws_access_key }}"
+        aws_secret_access_key: "{{ aws_secret_key }}"
+        region: "{{ aws_region }}"
+        format: "{{ aws_format }}"
+      become_user: "{{ aws_system_user }}"
+      changed_when: false
+
+
+    - name: Download kubectl binary
+      get_url:
+        url: "https://storage.googleapis.com/kubernetes-release/release/v{{ kubectl_version }}/bin/{{ kubectl_os }}/{{ kubectl_arch }}/kubectl"
+        dest: "{{ kubectl_tmp_directory }}"
+      tags:
+        - kubectl
+
+
+    - name: Copy kubectl binary to destination directory
+      copy:
+        src: "{{ kubectl_tmp_directory }}/{{ item }}"
+        dest: "{{ kubectl_bin_directory }}/{{ item }}"
+        mode: "{{ kubectl_binary_mode }}"
+        owner: "{{ kubectl_owner }}"
+        group: "{{ kubectl_group }}"
+        remote_src: true
+      with_items:
+        - kubectl
+

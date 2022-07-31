@@ -4,6 +4,7 @@ pipeline {
         maven 'maven-3.8.6'
         jdk 'java17'
     }
+
     stages {
         stage ('Initialize') {
             steps {
