@@ -102,8 +102,8 @@
       vars:
         aws_system_user: root
         aws_profile: default
-        aws_access_key: "AKIAQU2NDSEN2WGJWM5Z"
-        aws_secret_key: "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"
+        aws_access_key: "AKIA43NT7SJWXN4JIWVF"
+        aws_secret_key: "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"
         aws_region: us-east-1
         aws_format: json
 
