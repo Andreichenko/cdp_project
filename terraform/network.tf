@@ -16,6 +16,7 @@ resource "aws_vpc" "vpc_common" {
 resource "aws_subnet" "common_subnet_primary" {
   provider                      = aws.region-common
   cidr_block                    = "10.0.1.0/24"
+  availability_zone             = element(data.aws_availability_zones.azs.names, 0)
   vpc_id                        = aws_vpc.vpc_common.id
   tags          = {
     Name                        = "Common subnet primary"
@@ -23,6 +24,11 @@ resource "aws_subnet" "common_subnet_primary" {
     Environmet                  = "Dev-Test"
     Region                      = "us-east-1"
   }
+}
+
+data "aws_availability_zones" "azs" {
+  provider                      = aws.region-common
+  state                         = "available"
 }
 
 #Create route table in east
