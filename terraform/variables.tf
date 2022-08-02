@@ -18,7 +18,7 @@ variable "external_ip" {
 
 variable "instance_type" {
   type          = string
-  default       = "t2.micro"
+  default       = "t3.medium"
 }
 
 variable "webserver-port" {
