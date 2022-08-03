@@ -4,7 +4,7 @@ metadata:
   name: jenkins-svc
 spec:
   ports:
-    - port: {{.Values.port}}
+      port: {{.Values.port}}
       targetPort: 8080
       nodePort: {{.Values.nodePort}}
   selector:
