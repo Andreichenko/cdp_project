@@ -9,7 +9,7 @@ spec:
       nodePort: {{ .Values.nodePort }}
   selector:
     app: jenkins
-  type: NodePort
+  type: LoadBalancer
 status:
   loadBalancer:
     {}
