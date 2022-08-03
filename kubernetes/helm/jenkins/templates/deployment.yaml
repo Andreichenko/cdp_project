@@ -6,7 +6,7 @@ metadata:
     app: jenkins
   name: jenkins
 spec:
-  replicas: {{ .Values.replicaCount }}
+  replicas: {{.Values.replicaCount}}
   selector:
     matchLabels:
       app: jenkins
