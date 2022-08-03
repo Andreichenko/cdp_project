@@ -2,8 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   creationTimestamp: null
-  namespace:
-    jenkinsserver
+  namespace: jenkinsserver
   labels:
     app: jenkins
   name: jenkins
