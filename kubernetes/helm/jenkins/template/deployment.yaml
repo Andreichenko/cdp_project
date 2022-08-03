@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   creationTimestamp: null
   namespace:
-    jenkins
+    jenkinsserver
   labels:
     app: jenkins
   name: jenkins
