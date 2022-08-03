@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: jenkins-svc
+spec:
+  ports:
+    - port: {{ .Values.port }}
+      targetPort: 8080
+      nodePort: {{ .Values.nodePort }}
+  selector:
+    app: jenkins
+  type: NodePort
+status:
+  loadBalancer:
+    {}
