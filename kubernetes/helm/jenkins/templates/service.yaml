@@ -11,5 +11,4 @@ spec:
     app: jenkins
     type: NodePort
 status:
-  loadBalancer:
-    {}
+  loadBalancer: {}
