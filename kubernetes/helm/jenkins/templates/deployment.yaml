@@ -1,7 +1,6 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  creationTimestamp: null
   namespace: jenkinsserver
   labels:
     app: jenkins
@@ -15,7 +14,6 @@ spec:
     {}
   template:
     metadata:
-      creationTimestamp: null
       labels:
         app: jenkins
     spec:
