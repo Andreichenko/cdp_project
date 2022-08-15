@@ -1,3 +1,0 @@
-replicaCount: 1
-port: 8080
-nodePort: 30000
