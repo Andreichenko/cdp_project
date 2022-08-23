@@ -1,0 +1,8 @@
+service:
+  name: app-service
+  type: LoadBalancer
+  app: app-devops-project
+  port: 8080
+  targetPort: 8080
+  nodePort: 31200
+
