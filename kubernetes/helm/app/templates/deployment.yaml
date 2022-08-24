@@ -1,1 +1,26 @@
 apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-deployment
+spec:
+  selector:
+    matchLabels:
+      app: app-devops-project
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+
+  template:
+    metadata:
+      labels:
+        app: app-devops-project
+    spec:
+      containers:
+        - name: app-devops-project
+          image: andreichenko/mytomcat:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
