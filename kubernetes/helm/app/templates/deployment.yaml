@@ -1,26 +1,26 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: app-deployment
+  name: {{ .Values.app.name }}
 spec:
   selector:
     matchLabels:
-      app: app-devops-project
-  replicas: 2
+      app: {{ .Values.app.name }}
+  replicas: {{ .Values.app.replicas }}
   strategy:
-    type: RollingUpdate
+    type: {{ .Values.app.type }}
     rollingUpdate:
-      maxSurge: 1
-      maxUnavailable: 1
+      maxSurge: {{ .Values.app.maxSurge }}
+      maxUnavailable: {{ .Values.app.maxUnavailible }}
 
   template:
     metadata:
       labels:
-        app: app-devops-project
+        app: {{ .Values.app.name}}
     spec:
       containers:
-        - name: app-devops-project
-          image: andreichenko/mytomcat:latest
-          imagePullPolicy: Always
+        - name: {{ .Values.app.name}}
+          image: {{ .Values.app.image }}
+          imagePullPolicy: {{ .Values.app.imagePullPolicy }}
           ports:
-            - containerPort: 8080
+            - containerPort: {{ .Values.app.containerPort }}
