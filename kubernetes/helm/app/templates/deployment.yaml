@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.app.name }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.app.name }}
+  replicas: {{ .Values.app.replicas }}
+  strategy:
+    type: {{ .Values.app.type }}
+    rollingUpdate:
+      maxSurge: {{ .Values.app.maxSurge }}
+      maxUnavailable: {{ .Values.app.maxUnavailible }}
+
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.app.name}}
+    spec:
+      containers:
+        - name: {{ .Values.app.name}}
+          image: {{ .Values.app.image }}
+          imagePullPolicy: {{ .Values.app.imagePullPolicy }}
+          ports:
+            - containerPort: {{ .Values.app.containerPort }}

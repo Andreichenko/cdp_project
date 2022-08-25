@@ -1,0 +1,16 @@
+service:
+  name: app-service
+  type: LoadBalancer
+  app: app-devops-project
+  port: 8080
+  targetPort: 8080
+  nodePort: 31200
+app:
+  name: app-devops-project
+  replicas: 2
+  type: RollingUpdate
+  maxSurge: 1
+  maxUnavailible: 1
+  image: andreichenko/mytomcat:latest
+  imagePullPolicy: Always
+  containerPort: 8080
