@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: {{ .Values.service.name }}
   labels:
-    app: app-devops-project
+    app: {{ .Values.service.app }}
 
 spec:
   selector:
