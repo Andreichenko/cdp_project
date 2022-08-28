@@ -4,6 +4,7 @@ metadata:
   name: {{ .Values.service.name }}
   labels:
     app: app-devops-project
+
 spec:
   selector:
     app: {{ .Values.service.app }}

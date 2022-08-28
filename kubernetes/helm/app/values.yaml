@@ -5,6 +5,7 @@ service:
   port: 8080
   targetPort: 8080
   nodePort: 31200
+
 app:
   name: app-devops-project
   replicas: 2
