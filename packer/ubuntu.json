@@ -4,7 +4,7 @@
     "source_ami_filter": {
       "filters": {
         "virtulization_type": "hvm",
-        "root_device-type": "ebs",
+        "root_device_type": "ebs",
         "name":"ubuntu/images/hvm-ssd/ubuntu-bionic-18.04-amd64-server-*"
       },
       "owners": ["099720109477"],
