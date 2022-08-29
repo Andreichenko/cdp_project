@@ -1,2 +1,5 @@
 name: app-service
 version: 1
+
+
+# kubectl exec =it dnsutils == nslookup kubernetes.default
