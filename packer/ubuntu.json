@@ -1,4 +1,8 @@
 {
+  "variables": {
+    "aws_access_key": null,
+
+  },
   "builders": [{
     "type": "amazon-ebs",
     "source_ami_filter": {
@@ -12,6 +16,7 @@
     },
     "instance_type": "t2.micro",
     "ssh_username": "ubuntu" ,
+    "access_key": "{{user `aws_access_key`}}",
     "ami_name": "packer {{timestamp}}"
   }]
 }
