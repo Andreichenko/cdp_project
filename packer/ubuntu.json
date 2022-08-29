@@ -2,6 +2,10 @@
   "builders": [{
     "type": "amazon-ebs",
     "source_ami_filter": {
+      "filters": {
+        "virtulization_type": "hvm",
+        "root_device-type": "ebs"
+      },
       "owners": ["099720109477"]
     },
     "instance_type": "t2-micro",
