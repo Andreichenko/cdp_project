@@ -3,7 +3,7 @@
     "type": "amazon-ebs",
     "source_ami_filter": {
       "filters": {
-        "virtulization-type": "hvm",
+        "virtualization-type": "hvm",
         "root-device-type": "ebs",
         "name":"ubuntu/images/hvm-ssd/ubuntu-bionic-18.04-amd64-server-*"
       },
