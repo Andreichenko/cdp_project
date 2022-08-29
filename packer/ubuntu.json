@@ -5,9 +5,10 @@
       "filters": {
         "virtulization_type": "hvm",
         "root_device-type": "ebs",
-        "name":"ubuntu/images/hvm-ssd/ubuntu-bionic-18.04-amd64-server-20220810"
+        "name":"ubuntu/images/hvm-ssd/ubuntu-bionic-18.04-amd64-server-*"
       },
-      "owners": ["099720109477"]
+      "owners": ["099720109477"],
+      "most_recent": true
     },
     "instance_type": "t2-micro",
     "ssh_username": "ubuntu" ,
