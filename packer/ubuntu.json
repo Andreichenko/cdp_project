@@ -20,5 +20,9 @@
     "access_key": "{{user `aws_access_key`}}",
     "secret_key": "{{user `aws_secret_key`}",
     "ami_name": "packer {{timestamp}}"
+  }],
+  "provisioners": [{
+    "type": "shell",
+    "inline": "echo $PATH"
   }]
 }
