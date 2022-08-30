@@ -22,7 +22,19 @@
     "ami_name": "packer {{timestamp}}"
   }],
   "provisioners": [{
+    "type": "file",
+    "source": "files/web",
+    "destination": "~/web"
+    },
+    {
     "type": "shell",
-    "inline": "echo $PATH"
+    "inline": [
+      "sudo apt-get update",
+      "sudo apt-get install nginx -y",
+      "sudo mv ~/web/* /var/www/html/",
+      "sudo service nginx restart",
+      "sudo ufw allow 'Nginx HTTP'",
+      "sudo systemctl enable nginx"
+    ]
   }]
 }
