@@ -1,5 +1,10 @@
+apiVersion: v2
 name: app-service
-version: 1
+description: A Helm chart for CDP project. This is a mentoring project includes
+  some addition tools such as Jenkins, Terraform, AWS, Ansible, K8s.
+# A chart can be either an 'application' ot a 'library' chart.
+type: application
+version: 0.1.0
 
 
 # kubectl exec =it dnsutils == nslookup kubernetes.default
