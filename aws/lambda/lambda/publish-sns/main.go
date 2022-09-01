@@ -13,3 +13,7 @@ import (
 	"github.com/aws/aws-sdk-go/service/sns"
 )
 
+func main() {
+	s := sns.New(session.New())
+
+}
