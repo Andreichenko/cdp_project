@@ -23,6 +23,7 @@
   }],
   "provisioners": [{
     "type": "ansible",
-    "playbook_file": "test-app.yml"
+    "playbook_file": "test-app.yml",
+    "extra_arguments": ["--extra-vars", "ansible_python_interpreter=/usr/bin/python3"]
   }]
 }
