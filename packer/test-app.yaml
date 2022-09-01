@@ -1,0 +1,9 @@
+---
+
+- name: Echo
+  hosts: all
+
+  tasks:
+  - name: Install and update java
+    debug:
+    msg: loading... done.
