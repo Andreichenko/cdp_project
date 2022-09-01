@@ -4,13 +4,12 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"log"
-	"strings"
-    "github.com/aws/aws-lambda-go/tree/main/lambda"
-    "github.com/aws/aws-lambda-go/tree/main/lambdacontext"
+	"github.com/aws/aws-lambda-go/tree/main/lambda"
+	"github.com/aws/aws-lambda-go/tree/main/lambdacontext"
 	"github.com/aws/aws-sdk-go/tree/main/aws/session"
 	"github.com/aws/aws-sdk-go/tree/main/service/sns"
-
+	"log"
+	"strings"
 )
 
 func main() {
@@ -31,5 +30,7 @@ func main() {
 		if len(f) != 7 {
 			log.Panicf("cannot use arn: %s", c.InvokedFunctionArn)
 		}
-}
 
+		return fmt.Sprintf("success: %s", *r.MessageId), nil
+	})
+}
