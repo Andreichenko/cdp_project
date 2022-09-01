@@ -23,9 +23,6 @@
   }],
   "provisioners": {
     "type": "ansible",
-    "inline": [
-      "sudo apt-get update",
-      "sudo apt-get install mariadb-server -y"
-    ]
+    "playbook_file": "test-app.yml"
   }
 }
