@@ -26,4 +26,10 @@ func main() {
 		if len(f) != 7 {
 			log.Panicf("cannot use arn: %s", c.InvokedFunctionArn)
 		}
+
+		f := strings.Split(c.InvokedFunctionArn, ":")
+		if len(f) != 7 {
+			log.Panicf("cannot use arn: %s", c.InvokedFunctionArn)
+		}
 }
+
