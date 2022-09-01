@@ -21,8 +21,8 @@
     "secret_key": "{{user `aws_secret_key`}",
     "ami_name": "mariadb-{{timestamp}}"
   }],
-  "provisioners": {
+  "provisioners": [{
     "type": "ansible",
     "playbook_file": "test-app.yml"
-  }
+  }]
 }
