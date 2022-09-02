@@ -13,7 +13,7 @@ import (
 )
 
 func main() {
-	s := sns.New(session.New())
+	s = sns.New(session.New())
 
 	lambda.Start(func(ctx context.Context, js json.RawMessage) (string, error) {
 		c, ok := lambdacontext.FromContext(ctx)
