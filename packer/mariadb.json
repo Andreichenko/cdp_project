@@ -22,10 +22,10 @@
     "ami_name": "mariadb-{{timestamp}}"
   }],
   "provisioners": [{
-      "type": "shell",
-      "inline": [
-        "sudo apt-get update",
-        "sudo apt-get install mariadb-server -y"
-      ]
+      "type": "ansible",
+      "playbook_file": "ansible/mariadb.yml",
+      "extra_arguments": [
+        "--verbose"
+        ]
     }]
 }
