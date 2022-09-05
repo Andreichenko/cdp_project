@@ -1,0 +1,9 @@
+---
+- name: harden image
+  hosts: all
+  become: true
+  roles:
+    - dev-sec.os-hardening
+    - dev-sec.ssh-hardening
+  vars:
+    ssh_use_pam: true
