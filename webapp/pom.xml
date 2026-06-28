@@ -36,6 +36,12 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.example.cdp_project</groupId>
+            <artifactId>server</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>servlet-api</artifactId>
             <scope>provided</scope>
