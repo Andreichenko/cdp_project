@@ -40,6 +40,48 @@ graph TD
 
 ---
 
+## ☸️ Kubernetes & EKS Infrastructure
+
+Below is the detailed infrastructure topology of the AWS EKS Cluster provisioned via Terraform and the application deployment managed via Helm:
+
+```mermaid
+graph TD
+    subgraph AWS_Cloud ["🌐 AWS Cloud Provider"]
+        subgraph VPC ["🌐 Common VPC (10.0.0.0/16)"]
+            IGW["🚪 Internet Gateway (IGW)"]
+            
+            subgraph Public_Subnet ["🔓 Public Subnet (10.0.1.0/24)"]
+                ALB["⚖️ ELB / LoadBalancer Service"]
+            end
+            
+            subgraph Private_Subnets ["🔒 Private Subnets"]
+                EKS_Control["☸️ EKS Control Plane (Managed)"]
+                
+                subgraph ASG ["📦 Auto Scaling Group (3x Worker Nodes)"]
+                    Node1["🖥️ EC2 Worker Node 1"]
+                    Node2["🖥️ EC2 Worker Node 2"]
+                    Node3["🖥️ EC2 Worker Node 3"]
+                end
+            end
+        end
+    end
+    
+    subgraph K8s_Resources ["☸️ Kubernetes Infrastructure (Helm)"]
+        ALB -->|"Route traffic: NodePort 31200"| Node1 & Node2 & Node3
+        
+        subgraph Pods ["📦 App Pods (Replicas: 2)"]
+            Pod1["tomcat:9.0-jre8-alpine (Simple Payment Tool)"]
+            Pod2["tomcat:9.0-jre8-alpine (Simple Payment Tool)"]
+        end
+        
+        Node1 & Node2 & Node3 -->|"Target"| Pod1 & Pod2
+    end
+    
+    EKS_Control -->|"Manage nodes"| ASG
+```
+
+---
+
 ## Repository Structure
 
 * **[server/](file://server/)**: Core Java library containing business logic (Payment Processing, transfers, transaction logs, and unit tests).
