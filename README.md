@@ -10,28 +10,28 @@ This repository contains a full Continuous Delivery Pipeline demonstrating how t
 
 ---
 
-## 📐 Architecture & Workflow Diagram
+## 📐 1. Classic Infrastructure & Deployment (Tomcat & Docker)
 
-Below is the workflow of the deployment and compilation process:
+Below is the workflow showing the classic deployment pipeline targeting dedicated EC2 VMs (Tomcat and Docker hosts):
 
 ```mermaid
 graph TD
     Developer["💻 Developer"] -->|1. Git Push| GitHub["🐙 GitHub Repository"]
     GitHub -->|2. Webhook Trigger| Jenkins["🏗️ Jenkins CI/CD"]
     
-    subgraph Build_Stage ["🛠️ Compilation & Test"]
+    subgraph Build_Stage ["🛠️ Compilation & Packaging"]
         Jenkins -->|3. Compile & Test| Maven["📦 Maven (mvn package)"]
         Maven -->|4. Generate artifact| War["📄 webapp.war"]
     end
 
-    subgraph AWS_Infrastructure ["🌐 AWS Cloud (Terraform)"]
-        TF["🚀 Terraform Plan & Apply"] -->|Provision| VPC["🌐 Common VPC"]
+    subgraph AWS_Classic_Infra ["🌐 AWS Classic Infrastructure"]
+        VPC["🌐 Common VPC"]
         VPC -->|Provision| JenkinsVM["🖥️ Jenkins Master VM"]
         VPC -->|Provision| TomcatVM["🖥️ Tomcat Server VM"]
         VPC -->|Provision| DockerVM["🖥️ Docker Host VM"]
     end
 
-    subgraph Deploy_Stage ["🚀 Deployment Options"]
+    subgraph Classic_Deploy ["🚀 Classic Deployment Paths"]
         JenkinsVM -->|Option A: SCP Copy| TomcatVM
         JenkinsVM -->|Option B: Docker Build & Push| Registry["🐳 Docker Hub Registry"]
         Registry -->|Pull & Run Container| DockerVM
@@ -40,44 +40,50 @@ graph TD
 
 ---
 
-## ☸️ Kubernetes & EKS Infrastructure
+## ☸️ 2. Kubernetes Infrastructure & Deployment (AWS EKS & Helm)
 
-Below is the detailed infrastructure topology of the AWS EKS Cluster provisioned via Terraform and the application deployment managed via Helm:
+Below is the infrastructure topology and delivery workflow of the containerized application targeting the AWS EKS Cluster using Helm:
 
 ```mermaid
 graph TD
-    subgraph AWS_Cloud ["🌐 AWS Cloud Provider"]
-        subgraph VPC ["🌐 Common VPC (10.0.0.0/16)"]
-            IGW["🚪 Internet Gateway (IGW)"]
-            
-            subgraph Public_Subnet ["🔓 Public Subnet (10.0.1.0/24)"]
-                ALB["⚖️ ELB / LoadBalancer Service"]
+    Developer["💻 Developer"] -->|1. Git Push| GitHub["🐙 GitHub Repository"]
+    GitHub -->|2. Webhook Trigger| Jenkins["🏗️ Jenkins CI/CD"]
+    
+    subgraph K8s_Build_Stage ["🛠️ Containerization Pipeline"]
+        Jenkins -->|3. Build & Test| Maven["📦 Maven (mvn package)"]
+        Maven -->|4. Docker Build| Docker["🐳 Docker Engine"]
+        Docker -->|5. Push Image| Registry["🐳 Docker Hub Registry"]
+    end
+
+    subgraph AWS_EKS_Infra ["🌐 AWS EKS Infrastructure"]
+        subgraph VPC_K8s ["🌐 Common VPC (10.0.0.0/16)"]
+            subgraph Public_Subnet ["🔓 Public Subnet"]
+                ALB["⚖️ ELB (LoadBalancer Service)"]
             end
-            
             subgraph Private_Subnets ["🔒 Private Subnets"]
-                EKS_Control["☸️ EKS Control Plane (Managed)"]
-                
-                subgraph ASG ["📦 Auto Scaling Group (3x Worker Nodes)"]
-                    Node1["🖥️ EC2 Worker Node 1"]
-                    Node2["🖥️ EC2 Worker Node 2"]
-                    Node3["🖥️ EC2 Worker Node 3"]
+                EKS_Control["☸️ EKS Control Plane"]
+                subgraph ASG ["📦 Auto Scaling Group"]
+                    Node1["🖥️ Worker Node 1"]
+                    Node2["🖥️ Worker Node 2"]
+                    Node3["🖥️ Worker Node 3"]
                 end
             end
         end
     end
-    
-    subgraph K8s_Resources ["☸️ Kubernetes Infrastructure (Helm)"]
-        ALB -->|"Route traffic: NodePort 31200"| Node1 & Node2 & Node3
+
+    subgraph K8s_Deploy ["🚀 Helm Deployment to EKS"]
+        Jenkins -->|"6. helm upgrade --install"| EKS_Control
+        EKS_Control -->|"7. Deploy Pods"| ASG
+        Registry -->|"8. Pull Image"| ASG
         
         subgraph Pods ["📦 App Pods (Replicas: 2)"]
-            Pod1["tomcat:9.0-jre8-alpine (Simple Payment Tool)"]
-            Pod2["tomcat:9.0-jre8-alpine (Simple Payment Tool)"]
+            Pod1["tomcat:9.0-jre8-alpine (Payment Tool)"]
+            Pod2["tomcat:9.0-jre8-alpine (Payment Tool)"]
         end
         
-        Node1 & Node2 & Node3 -->|"Target"| Pod1 & Pod2
+        ASG -->|Run| Pod1 & Pod2
+        ALB -->|"9. Route: NodePort 31200"| Pod1 & Pod2
     end
-    
-    EKS_Control -->|"Manage nodes"| ASG
 ```
 
 ---
