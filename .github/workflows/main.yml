@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   build-java:
-    name: 'Build & Test Java App'
+    name: 'Build, Test & Dockerize Java App'
     runs-on: ubuntu-latest
 
     steps:
@@ -30,6 +30,15 @@ jobs:
 
     - name: Run JUnit Tests
       run: mvn test
+
+    - name: Upload Build Artifact (WAR)
+      uses: actions/upload-artifact@v3
+      with:
+        name: webapp-artifact
+        path: webapp/target/webapp.war
+
+    - name: Build Docker Image
+      run: docker build -t cdp-project:latest -f Dockerfile .
 
   validate-terraform:
     name: 'Validate Terraform'
@@ -60,3 +69,22 @@ jobs:
         cd terraform
         touch fake_key.pub
         terraform validate
+
+  validate-packer:
+    name: 'Validate Packer'
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Setup Packer
+      uses: hashicorp/setup-packer@main
+
+    - name: Validate Packer configs
+      run: |
+        packer validate -syntax-only packer/hardening_base.json
+        packer validate -syntax-only packer/mariadb.json
+        packer validate -syntax-only packer/nginx.json
+        packer validate -syntax-only packer/test-app.json
+        packer validate -syntax-only packer/ubuntu.json

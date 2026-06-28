@@ -1,4 +1,3 @@
-
 {
   "variables": {
     "aws_access_key": "{{env `AWS_ACCESS_KEY`}}",
@@ -19,13 +18,12 @@
     "instance_type": "t2.micro",
     "ssh_username": "ubuntu" ,
     "access_key": "{{user `aws_access_key`}}",
-    "secret_key": "{{user `aws_secret_key`}",
-    "ami_name": "hardening-base-{{timestamp}}"
+    "secret_key": "{{user `aws_secret_key`}}",
+    "ami_name": "mariadb-{{timestamp}}"
   }],
   "provisioners": [{
     "type": "ansible",
-    "playbook_file": "ansible/harden.yml",
-    "extra_arguments": ["--extra-vars", "ansible_python_interpreter=/usr/bin/python3","--verbose"]
+    "playbook_file": "ansible/test-app.yml",
+    "extra_arguments": ["--extra-vars", "ansible_python_interpreter=/usr/bin/python3"]
   }]
 }
-

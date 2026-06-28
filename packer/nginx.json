@@ -18,23 +18,12 @@
     "instance_type": "t2.micro",
     "ssh_username": "ubuntu" ,
     "access_key": "{{user `aws_access_key`}}",
-    "secret_key": "{{user `aws_secret_key`}",
-    "ami_name": "packer {{timestamp}}"
+    "secret_key": "{{user `aws_secret_key`}}",
+    "ami_name": "mariadb-{{timestamp}}"
   }],
   "provisioners": [{
-    "type": "file",
-    "source": "files/web",
-    "destination": "~/web"
-    },
-    {
-    "type": "shell",
-    "inline": [
-      "sudo apt-get update",
-      "sudo apt-get install nginx -y",
-      "sudo mv ~/web/* /var/www/html/",
-      "sudo service nginx restart",
-      "sudo ufw allow 'Nginx HTTP'",
-      "sudo systemctl enable nginx"
-    ]
+    "type": "ansible",
+    "playbook_file": "ansible/nginx.yml",
+    "extra_arguments": ["--extra-vars", "ansible_python_interpreter=/usr/bin/python3","--verbose"]
   }]
 }
