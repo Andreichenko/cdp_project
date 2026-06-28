@@ -11,7 +11,7 @@ spec:
     type: {{ .Values.app.type }}
     rollingUpdate:
       maxSurge: {{ .Values.app.maxSurge }}
-      maxUnavailable: {{ .Values.app.maxUnavailible }}
+      maxUnavailable: {{ .Values.app.maxUnavailable }}
 
   template:
     metadata:

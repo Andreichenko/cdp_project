@@ -11,7 +11,7 @@ app:
   replicas: 2
   type: RollingUpdate
   maxSurge: 1
-  maxUnavailible: 1
-  image: andreichenko/mytomcat:latest
+  maxUnavailable: 1
+  image: andreichenko/cdp-project:latest
   imagePullPolicy: Always
   containerPort: 8080

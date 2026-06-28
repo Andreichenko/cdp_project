@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: app-devops-project
-          image: andreichenko/mytomcat:latest
+          image: andreichenko/cdp-project:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
