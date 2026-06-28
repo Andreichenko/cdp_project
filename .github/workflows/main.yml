@@ -54,7 +54,9 @@ jobs:
         terraform init -backend=false
 
     - name: Terraform Validate
+      env:
+        TF_VAR_public_key_path: fake_key.pub
       run: |
         cd terraform
         touch fake_key.pub
-        terraform validate -var="public_key_path=fake_key.pub"
+        terraform validate
