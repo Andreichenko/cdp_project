@@ -1,6 +1,6 @@
 #Create SG for allowing TCP/8080 from all and tcp/22 from some ip in us-east-1
 resource "aws_security_group" "jenkins-sg" {
-  provider                 = aws.region-common
+  provider                 = aws.region_common
   name                     = "jenkins-sg"
   description              = "Allow tcp/8080 tcp/22"
   vpc_id                   = aws_vpc.vpc_common.id
@@ -28,7 +28,7 @@ resource "aws_security_group" "jenkins-sg" {
 }
 
 resource "aws_security_group" "tomcat-sg" {
-  provider                 = aws.region-common
+  provider                 = aws.region_common
   name                     = "tomcat-sg"
   description              = "Allow tcp/8090 tcp/22"
   vpc_id                   = aws_vpc.vpc_common.id
@@ -56,7 +56,7 @@ resource "aws_security_group" "tomcat-sg" {
 }
 
 resource "aws_security_group" "docker-sg" {
-  provider                 = aws.region-common
+  provider                 = aws.region_common
   name                     = "docker-sg"
   description              = "Allow tcp/8080 tcp/22"
   vpc_id                   = aws_vpc.vpc_common.id

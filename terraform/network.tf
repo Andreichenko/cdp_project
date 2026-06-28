@@ -1,6 +1,6 @@
 # Creating VPC for us-east-1
 resource "aws_vpc" "vpc_common" {
-  provider                      = aws.region-common
+  provider                      = aws.region_common
   cidr_block                    = "10.0.0.0/16"
   enable_dns_hostnames          = true
   enable_dns_support            = true
@@ -14,7 +14,7 @@ resource "aws_vpc" "vpc_common" {
 
 #Create subnet for common VPC
 resource "aws_subnet" "common_subnet_primary" {
-  provider                      = aws.region-common
+  provider                      = aws.region_common
   cidr_block                    = "10.0.1.0/24"
   availability_zone             = element(data.aws_availability_zones.azs.names, 0)
   vpc_id                        = aws_vpc.vpc_common.id
@@ -27,13 +27,13 @@ resource "aws_subnet" "common_subnet_primary" {
 }
 
 data "aws_availability_zones" "azs" {
-  provider                      = aws.region-common
+  provider                      = aws.region_common
   state                         = "available"
 }
 
 #Create route table in east
 resource "aws_route_table" "internet_route" {
-  provider                      = aws.region-common
+  provider                      = aws.region_common
   vpc_id                        = aws_vpc.vpc_common.id
   route {
     cidr_block                  = "0.0.0.0/0"
@@ -52,12 +52,12 @@ resource "aws_route_table" "internet_route" {
 resource "aws_main_route_table_association" "set-common-worker-rt-associate" {
   route_table_id                = aws_route_table.internet_route.id
   vpc_id                        = aws_vpc.vpc_common.id
-  provider                      = aws.region-common
+  provider                      = aws.region_common
 }
 
 #Create Internet Gateway in us-east-1
 resource "aws_internet_gateway" "internet-gateway-common" {
-  provider                      = aws.region-common
+  provider                      = aws.region_common
   vpc_id                        = aws_vpc.vpc_common.id
   tags    = {
     Name                        = "Common IGW"

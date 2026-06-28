@@ -4,7 +4,7 @@ variable "profile" {
   description = "The common profile for aws cli"
 }
 
-variable "region-common" {
+variable "region_common" {
   type          = string
   default       = "us-east-1"
   description = "common region"
@@ -21,7 +21,7 @@ variable "instance_type" {
   default       = "t3.medium"
 }
 
-variable "webserver-port" {
+variable "webserver_port" {
   type          = number
   default       = 8080
 }
