@@ -23,7 +23,7 @@ module "eks" {
     eks_nodes = {
       desired_capacity = 3
       max_capacity     = 3
-      min_capaicty     = 3
+      min_capacity     = 3
 
       instance_type = "t2.micro"
     }

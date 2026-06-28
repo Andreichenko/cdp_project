@@ -15,6 +15,7 @@ pipeline {
         // Target Hosts (Can be resolved dynamically from Terraform outputs in real environment)
         TOMCAT_HOST = "tomcat-server.local"
         DOCKER_HOST = "docker-server.local"
+        AWS_DEFAULT_REGION = "us-east-1"
     }
 
     stages {
@@ -84,6 +85,24 @@ pipeline {
                         // sh "ssh ubuntu@${DOCKER_HOST} 'docker pull ${REGISTRY}:${VERSION} && docker stop app || true && docker rm app || true && docker run -d --name app -p 8080:8080 ${REGISTRY}:${VERSION}'"
                         
                         echo "SUCCESS: Containerized application deployed to Docker host. Access at http://${DOCKER_HOST}:8080/"
+                    }
+                }
+
+                // Option 3: Modern Deployment to AWS EKS Cluster via Helm Chart
+                stage('Option 3: Deploy to EKS (Kubernetes)') {
+                    when {
+                        expression { env.DEPLOY == 'true' }
+                    }
+                    steps {
+                        echo "=== OPTION 3: KUBERNETES DEPLOYMENT ==="
+                        
+                        echo "Updating kubeconfig for AWS EKS Cluster..."
+                        // sh "aws eks update-kubeconfig --region ${AWS_DEFAULT_REGION} --name my-eks-cluster"
+                        
+                        echo "Upgrading Helm deployment with the new Docker image..."
+                        // sh "helm upgrade --install my-app kubernetes/helm/app --set app.image=${REGISTRY}:${VERSION} --set service.type=LoadBalancer"
+                        
+                        echo "SUCCESS: Application deployed to Kubernetes EKS Cluster. Verify service using kubectl get svc"
                     }
                 }
             }

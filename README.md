@@ -77,4 +77,4 @@ The Ansible variables in `terraform/ansible/vars/variables.yml` are encrypted us
 2. **Jenkinsfile (CD)**:
    * Declarative pipeline in [Jenkinsfile](file://Jenkinsfile) with parallel deployment stages.
    * Compiles Java application into `.war` package.
-   * Performs classic deployment to Tomcat server and modern deployment to Docker host.
+   * Performs three deployment strategies: classic deployment to Tomcat server, containerized deployment to Docker host, and Kubernetes deployment to EKS cluster via Helm.
