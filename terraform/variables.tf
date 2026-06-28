@@ -37,3 +37,9 @@ variable "vpc_cidr_block" {
   type        = string
   default     = "10.0.0.0/16"
 }
+
+variable "public_key_path" {
+  description = "Path to the SSH public key for EC2 instances"
+  type        = string
+  default     = "~/.ssh/id_rsa.pub"
+}

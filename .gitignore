@@ -1,0 +1,33 @@
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.backup
+*.tfstate.lock.info
+*.tfvars
+*.tfvars.json
+tfplan
+.terraform.lock.hcl
+
+# Ansible
+*vault_pass*
+.vault_pass
+**/ansible/.vault_pass
+**/ansible/vars/vault_key
+!*.example
+
+# Packer
+.packer/
+packer_cache/
+
+# Maven (Java build artifacts)
+**/target/
+*.jar
+*.war
+*.ear
+
+# IDEs & System
+.idea/
+.vscode/
+*.iml
+.DS_Store
+Thumbs.db

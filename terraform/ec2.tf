@@ -22,7 +22,7 @@ data "aws_ami" "Ubuntu-us-east-1"{
 #create key-pair for logging into EC2 in us-east-1
 resource "aws_key_pair" "common-key" {
   provider                     = aws.region_common
-  public_key                   = file("~/.ssh/id_rsa.pub")
+  public_key                   = file(var.public_key_path)
   key_name                     = "jenkins"
 }
 
